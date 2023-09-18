@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.status(201).send('<h1>Welcome to BuyTix</h1>')
+    res.status(201).send('<h1>Welcome to Burgrr</h1>')
 })
 
 // Import Router
