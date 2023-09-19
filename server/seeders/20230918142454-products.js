@@ -7,7 +7,7 @@ module.exports = {
     //   [
     //     {
     //       id: 1,
-    //       product_name: 'Cheeseburger',
+    //       product_name: 'Cheeseburgrr',
     //       product_image: 'public/1.png',
     //       price: 32000,
     //       description: 'test',
@@ -16,7 +16,7 @@ module.exports = {
     //     },
     //     {
     //       id: 2,
-    //       product_name: 'Double Cheeseburger',
+    //       product_name: 'Double Cheeseburgrr',
     //       product_image: 'public/2.png',
     //       price: 39500,
     //       description: 'test',
@@ -25,7 +25,7 @@ module.exports = {
     //     },
     //     {
     //       id: 3,
-    //       product_name: 'Triple Cheeseburger',
+    //       product_name: 'Triple Cheeseburgrr',
     //       product_image: 'public/3.png',
     //       price: 61500,
     //       description: 'test',
@@ -34,7 +34,7 @@ module.exports = {
     //     },
     //     {
     //       id: 4,
-    //       product_name: 'Beef Burger',
+    //       product_name: 'Beef Burgrr',
     //       product_image: 'public/4.png',
     //       price: 22500,
     //       description: 'test',
@@ -43,7 +43,7 @@ module.exports = {
     //     },
     //     {
     //       id: 5,
-    //       product_name: 'Big Burger',
+    //       product_name: 'Big Burgrr',
     //       product_image: 'public/5.png',
     //       price: 41000,
     //       description: 'test',
@@ -52,7 +52,7 @@ module.exports = {
     //     },
     //     {
     //       id: 6,
-    //       product_name: 'Chicken Burger',
+    //       product_name: 'Chicken Burgrr',
     //       product_image: 'public/6.png',
     //       price: 22500,
     //       description: 'test',
@@ -61,7 +61,7 @@ module.exports = {
     //     },
     //     {
     //       id: 7,
-    //       product_name: 'Fish Fillet Burger',
+    //       product_name: 'Fish Fillet Burgrr',
     //       product_image: 'public/7.png',
     //       price: 32000,
     //       description: 'test',
