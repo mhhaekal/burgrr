@@ -24,7 +24,7 @@ const HomepageCashier = () => {
 
                 <div className="w-[20%]">
                     <div className="flex justify-center text-4xl font-black my-5">Category</div>
-                    <div className="flex flex-col gap-5 mt-5 overflow-auto h-[730px]">
+                    <div className="flex flex-col gap-5 m-5 overflow-auto h-[730px]">
                         <CategoryCard name="Burgrr" />
                         <CategoryCard name="Fries" />
                         <CategoryCard name="Chicken" />
@@ -40,7 +40,7 @@ const HomepageCashier = () => {
 
                     <div className=" flex gap-5 justify-between border border-white border-b-green-600 pt-5 pb-5 px-10">
 
-                        <div>Logo</div>
+                        <img className="w-[120px] h-[50px]" src="./logoburgrr.png" alt="" />
                         <div className="flex gap-2">
                             <Searchbar />
                             <Button style="btn bg-green-600 hover:bg-green-600 text-white w-[80px]" text="Search" />
@@ -50,11 +50,11 @@ const HomepageCashier = () => {
                         <div className="drawer-end">
                             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                             <div className="drawer-content">
-                                <label htmlFor="my-drawer" className="btn bg-green-600 text-white hover:bg-green-600 drawer-button">Cart</label>
+                                <label htmlFor="my-drawer" className="btn bg-green-600 text-white hover:bg-green-600 drawer-button"> Cart</label>
                             </div>
                             <div className="drawer-side">
                                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
-                                <ul className="menu w-96 min-h-full bg-base-200 text-base-content">
+                                <ul className="menu w-96 min-h-full bg-green-200 text-base-content">
                                     <div>
                                         <Cart />
                                     </div>
@@ -74,7 +74,6 @@ const HomepageCashier = () => {
                         <ProductCard name="DOUBLE BIGBURGRR" button={<RoundButton text="+" />} />
                         <ProductCard name="TRIPLE BIGBURGRR" button={<RoundButton text="+" />} />
                         <ProductCard name="Just Burgrr" button={<RoundButton text="+" />} />
-
                     </div>
 
                     <div className="pt-4 border border-t-green-600">

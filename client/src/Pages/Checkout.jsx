@@ -11,7 +11,7 @@ const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState(false)
     const payment = useRef()
 
-    const input = async () => {
+    const onConfirm = async () => {
         try {
             console.log(payment.current.value);
             setPaymentMethod(payment.current.value)
@@ -21,12 +21,8 @@ const Checkout = () => {
         }
     }
 
-    const trans = {
-        method: "loloo"
-    }
-
     useEffect(() => {
-        input()
+        onConfirm()
     }, [])
 
     return (
@@ -35,7 +31,7 @@ const Checkout = () => {
                 <div className="text-4xl font-black">Checkout Transaction</div>
 
                 <div className="py-5 text-xl font-semibold">Items</div>
-                <div className="h-[400px] overflow-auto mb-5">
+                <div className="flex flex-col gap-3 h-[400px] overflow-auto mb-5">
                     <CartCard />
                     <CartCard />
                     <CartCard />
@@ -51,16 +47,20 @@ const Checkout = () => {
                 <div className="mt-5 text-xl font-semibold">
                     <div>Payment Method
                     </div>
-                    <div className="pt-5">
-                        <select ref={payment} className="select select-bordered w-full max-w-xs bg-green-600 text-white hover:text-white">
-                            <option disabled selected>Please choose your payment method</option>
-                            <option onClick={() => setPaymentMethod(true)} value={"cash"}>Cash</option>
-                            <option onClick={() => setPaymentMethod(false)} value={"gopay"}>Gopay</option>
-                            <option onClick={() => setPaymentMethod(false)} value={"ovo"}>OVO</option>
-                            <option onClick={() => setPaymentMethod(false)} value={"card"}>Card</option>
-                        </select>
-                    </div>
 
+                    <div className="flex pt-5 gap-5">
+                        <div className="">
+                            <select ref={payment} className="select select-bordered w-full max-w-xs bg-green-600 text-white hover:text-white">
+                                <option disabled selected>Please choose your payment method</option>
+                                <option value={"cash"}>Cash</option>
+                                <option value={"gopay"}>Gopay</option>
+                                <option value={"ovo"}>OVO</option>
+                                <option value={"card"}>Card</option>
+                            </select>
+                        </div>
+
+                        <div className=""><Button click={() => onConfirm()} text="Confirm" style="btn" /> </div>
+                    </div>
                 </div>
 
             </div>
@@ -87,9 +87,8 @@ const Checkout = () => {
                     </div>
                 </div>
 
-
                 {
-                    paymentMethod ?
+                    paymentMethod === "cash" ?
                         <div>
                             <div className="flex flex-col justify-center mx-5 gap-3">
                                 <div className="flex justify-end text-2xl font-semibold text-white">Input Amount</div>

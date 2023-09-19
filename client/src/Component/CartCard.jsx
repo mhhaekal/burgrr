@@ -6,7 +6,7 @@ const CartCard = () => {
         <div>
             <div className="px-5">
 
-                <div className="bg-white border rounded-3xl flex">
+                <div className="bg-white shadow-lg rounded-3xl flex">
                     <div className="flex items-center p-5">
                         <img className="h-[100px] w-[100px] rounded-lg" src="https://bakeitwithlove.com/wp-content/uploads/2021/05/McDonalds-The-Travis-Scott-Burger-sq.jpg" alt="" />
                     </div>
