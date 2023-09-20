@@ -14,14 +14,14 @@ const Nav = () => {
             <div className="w-[100px] h-screen bg-green-600 flex flex-col justify-between">
 
                 <div className="flex justify-center">
-                    <Link to={'/cashier/profile'}>
+                    <Link to={'/profile'}>
                         <div className=" mt-5 w-[80px] h-[80px] border rounded-full">
                         </div>
                     </Link>
                 </div>
 
                 <div className="flex flex-col gap-10 items-center mb-10">
-                    <Link to={'/cashier'}>
+                    <Link to={'/'}>
                         <div>
                             <MdRestaurantMenu className="text-5xl text-white" />
                         </div>

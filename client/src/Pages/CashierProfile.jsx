@@ -31,7 +31,7 @@ const CashierProfile = () => {
 
                             <div className="flex justify-between border-4 border-white border-b-green-600">
                                 <div className="flex items-center">profile image</div>
-                                <div className="border mb-3"><Input type={"file"} style={"file-input w-[250px] border"} />
+                                <div className=" mb-3"><Input type={"file"} style={"file-input border border-black"} />
                                 </div>
 
                             </div>

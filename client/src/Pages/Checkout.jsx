@@ -104,7 +104,7 @@ const Checkout = () => {
 
                 <div className="flex flex-col justify-center items-center gap-5">
                     <Button style="btn hover:bg-white bg-white text-green-600 flex justify-center rounded-xl text-3xl font-extrabold w-[500px] h-[50px] flex items-center" text="Process Payment" />
-                    <Link to={'/cashier'}>
+                    <Link to={'/'}>
                         <Button style="btn hover:bg-black hover:border-black bg-black text-white flex justify-center rounded-xl text-3xl border-black font-extrabold w-[500px] h-[50px] flex items-center" text="Cancel" />
                     </Link>
                 </div>

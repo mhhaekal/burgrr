@@ -31,7 +31,7 @@ const NavAdmin = () => {
                     </Link>
 
 
-                    <Link to={'/admin/data'}>
+                    <Link to={'/admin/employee'}>
                         <div>
                             <FaCircleUser className="text-5xl text-white" />
                         </div>
