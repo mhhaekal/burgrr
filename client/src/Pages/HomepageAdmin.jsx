@@ -9,8 +9,10 @@ import SortButton from "../Component/SortButton";
 import ProductCard from "../Component/ProductCard";
 import Pagination from "../Component/Pagination";
 import Button from "../Component/Button";
-import ModalNew from "../Component/ModalNew";
-import ModalEdit from "../Component/ModalEdit";
+import ModalNew from "../Component/Modals/ModalNew";
+import ModalEdit from "../Component/Modals/ModalEdit";
+import ModalNewCat from '../Component/Modals/ModalNewCat';
+import ModalEditCat from '../Component/Modals/ModalEditCat';
 
 
 const HomepageAdmin = () => {
@@ -26,15 +28,16 @@ const HomepageAdmin = () => {
                     <div></div>
                     <div className="flex flex-col gap-5 mt-5 overflow-auto h-[730px]">
                         <div className="flex justify-center">
-                            <Button style={"btn bg-green-900 hover:bg-green-900 text-bold text-xl w-[180px] h-[80px] text-white rounded-full"} text={"Add new +"} />
+                            {/* <Button style={"btn bg-green-900 hover:bg-green-900 text-bold text-xl w-[180px] h-[80px] text-white rounded-full"} text={"Add new +"} /> */}
+                            <ModalNewCat />
                         </div>
-                        <CategoryCard name={"Burgrr"} edit={<GrFormEdit className='text-3xl' />} />
-                        <CategoryCard name={"Fries"} />
-                        <CategoryCard name={"Chicken"} />
-                        <CategoryCard name={"Fish"} />
-                        <CategoryCard name={"Taco"} />
-                        <CategoryCard name={"Snacks"} />
-                        <CategoryCard name={"Beverages"} />
+                        <CategoryCard name={"Burgrr"} item={<ModalEditCat />} />
+                        <CategoryCard name={"Fries"} item={<ModalEditCat />} />
+                        <CategoryCard name={"Chicken"} item={<ModalEditCat />} />
+                        <CategoryCard name={"Fish"} item={<ModalEditCat />} />
+                        <CategoryCard name={"Taco"} item={<ModalEditCat />} />
+                        <CategoryCard name={"Snacks"} item={<ModalEditCat />} />
+                        <CategoryCard name={"Drinks"} item={<ModalEditCat />} />
 
                     </div>
                 </div>
@@ -43,7 +46,7 @@ const HomepageAdmin = () => {
 
                     <div className=" flex gap-2 justify-between border border-white border-b-green-600 pt-5 pb-5 px-10">
 
-                        <img className="w-[120px] h-[50px]" src="./logoburgrr.png" alt="" />
+                        <img className="w-[150px] h-[50px]" src="./logoburgrr.png" alt="" />
                         <div className="flex gap-2">
                             <ModalNew />
                             <Searchbar />

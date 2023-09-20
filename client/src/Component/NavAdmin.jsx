@@ -19,15 +19,18 @@ const NavAdmin = () => {
                 </div>
 
                 <div className="flex flex-col gap-10 items-center mb-10">
+
+                    <div>
+                        <BsFillPieChartFill className="text-5xl text-white" />
+                    </div>
+
                     <Link to={'/admin'}>
                         <div>
                             <LuClipboardEdit className="text-5xl text-white" />
                         </div>
                     </Link>
 
-                    <div>
-                        <BsFillPieChartFill className="text-5xl text-white" />
-                    </div>
+
                     <Link to={'/admin/data'}>
                         <div>
                             <FaCircleUser className="text-5xl text-white" />

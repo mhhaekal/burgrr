@@ -40,7 +40,7 @@ const HomepageCashier = () => {
 
                     <div className=" flex gap-5 justify-between border border-white border-b-green-600 pt-5 pb-5 px-10">
 
-                        <img className="w-[120px] h-[50px]" src="./logoburgrr.png" alt="" />
+                        <img className="w-[150px] h-[50px]" src="./logoburgrr.png" alt="" />
                         <div className="flex gap-2">
                             <Searchbar />
                             <Button style="btn bg-green-600 hover:bg-green-600 text-white w-[80px]" text="Search" />
@@ -78,10 +78,7 @@ const HomepageCashier = () => {
 
                     <div className="pt-4 border border-t-green-600">
                         <div className="text-xl flex justify-center items-center ">8 Product(s)</div>
-
-
                         <Pagination />
-
                     </div>
 
                 </div>

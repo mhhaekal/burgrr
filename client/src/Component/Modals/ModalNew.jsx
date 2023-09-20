@@ -1,5 +1,5 @@
-import Button from "./Button"
-import Input from "./Input"
+import Button from "../Button"
+import Input from "../Input"
 
 const ModalNew = () => {
     return (
@@ -13,19 +13,19 @@ const ModalNew = () => {
 
                     <div className="flex flex-col gap-5 mt-5">
                         <div>
-                            <div className="text-white"> Product Name</div>
+                            <div className="text-white pb-2"> Product Name</div>
                             <Input type={"text"} style={"input w-full"} />
                         </div>
                         <div>
-                            <div className="text-white">Product Image</div>
+                            <div className="text-white pb-2">Product Image</div>
                             <Input type={"file"} style={"file-input w-full"} />
                         </div>
                         <div>
-                            <div className="text-white">Product Price</div>
+                            <div className="text-white pb-2">Product Price</div>
                             <Input type={"currency"} style={"input w-full"} />
                         </div>
                         <div>
-                            <div className="text-white">Product Category</div>
+                            <div className="text-white pb-2">Product Category</div>
                             <select className="select select-bordered w-full">
                                 <option disabled selected></option>
                                 <option>Burgrr</option>
@@ -36,7 +36,7 @@ const ModalNew = () => {
                             </select>
                         </div>
                         <div>
-                            <div className="text-white">Description</div>
+                            <div className="text-white pb-2">Description</div>
                             <div><textarea className="w-full pl-4 pt-2" cols="30" rows="5"></textarea></div>
                         </div>
                     </div>
