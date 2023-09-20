@@ -10,8 +10,10 @@ app.get('/', (req, res) => {
 })
 
 // Import Router
-const { usersRouter } = require('./routers')
+const { usersRouter, productsRouter, transactionsRouter } = require('./routers')
 app.use('/users', usersRouter)
+app.use('/products', productsRouter)
+app.use('/transaction', transactionsRouter)
 app.use(express.static('public'))
 app.listen(PORT, () => console.log(`API Running on Port ${PORT}`))
 
