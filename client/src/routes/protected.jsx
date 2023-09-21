@@ -24,10 +24,10 @@ const Protected = ({ children, adminPage, cashierPage }) => {
         }, 1500),
         nav("/admin")
       );
-
+    // setLoading(false);
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 3000);
   }, [role, children]);
 
   return (
