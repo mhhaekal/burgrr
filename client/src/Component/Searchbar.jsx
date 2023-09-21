@@ -1,11 +1,15 @@
-const Searchbar = () => {
-    return (
+const Searchbar = (props) => {
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={props.onChange}
+        placeholder="Search here"
+        className="input bg-green-900 w-[500px] text-white placeholder:text-white"
+        value={props.value}
+      />
+    </div>
+  );
+};
 
-        <div>
-            <input type="text" placeholder="Search here" className="input bg-green-900 w-[500px] text-white placeholder:text-white" />
-        </div>
-    )
-
-}
-
-export default Searchbar
+export default Searchbar;

@@ -5,6 +5,7 @@ const initialState = {
   userName: "",
   image: "",
   role: "",
+  id: "",
 };
 
 export const userSlice = createSlice({
