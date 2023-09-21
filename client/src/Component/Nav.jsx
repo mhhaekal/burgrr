@@ -9,6 +9,7 @@ import { onLogout } from "../redux/Features";
 
 const Nav = () => {
   const { image } = useSelector((state) => state.user);
+  console.log(image);
   const dispatch = useDispatch();
   return (
     <div className="flex justify-center h-full">
@@ -17,7 +18,7 @@ const Nav = () => {
           <Link to={"/cashier/profile"}>
             <div className=" mt-5 w-[80px] h-[80px] border rounded-full">
               <img
-                src={`./../../../server/public/profile1.jpeg`}
+                src={`http://localhost:4000/${image.substring(6)}`}
                 className="w-full h-full object-cover rounded-full"
                 alt=""
               />
