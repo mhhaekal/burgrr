@@ -13,6 +13,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { onCheckislogin } from "./redux/Features";
+import ChangePass from "./Pages/changePassword";
+
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -34,6 +36,7 @@ function App() {
         <Route path="/admin/profile" element={<AdminProfile />} />
         <Route path="/admin/data" element={<DataEmployee />} />
         <Route path="/verify/:token" element={<Verify />} />
+        <Route path="/change/:token" element={<ChangePass />} />
       </Routes>
     </div>
   );
