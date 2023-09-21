@@ -3,7 +3,14 @@ const db = require('./../models')
 module.exports = {
     transactionService1: async (data) => {
         try {
-            return await db.transaction.create({ ...data })
+            const transaction = await db.transaction.create({ total: data.total })
+            const detail = data.details.map(value => {
+                return { ...value, transaction_id: transaction.dataValues.id }
+            })
+            await db.transaction_detail.bulkCreate(detail)
+            return await db.cart.destroy({
+                where: {}
+            })
         } catch (error) {
             return error
         }
