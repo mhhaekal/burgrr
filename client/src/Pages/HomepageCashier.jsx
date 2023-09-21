@@ -1,5 +1,5 @@
-import React from "react"
-
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 //import react icon
 import { BiSearchAlt } from 'react-icons/bi';
 
@@ -16,6 +16,45 @@ import Button from "../Component/Button";
 
 
 const HomepageCashier = () => {
+
+    const [catId, setCatId] = useState([])
+    const [category, setCategory] = useState([])
+
+    const onGetCategory = async () => {
+        try {
+            const category = await axios.get(`${process.env.REACT_APP_URL}products/category`)
+            console.log(category.data.data);
+            setCategory(category.data.data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // const onFilterCat = async (id) => {
+    //     try {
+    //         setCatId(id)
+    //         const filter = await axios.get(`${process.env.REACT_APP_URL}products/all/${catId}`)
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    // const onFilterProducts = async () => {
+    //     try {
+
+    //         console.log(filter);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     onGetCategory()
+    //     onFilterCat()
+    //     onFilterProducts()
+    // }, [])
+
     return (
         <div>
             <div className="flex h-screen">
@@ -24,14 +63,15 @@ const HomepageCashier = () => {
 
                 <div className="w-[20%]">
                     <div className="flex justify-center text-4xl font-black my-5">Category</div>
-                    <div className="flex flex-col gap-5 m-5 overflow-auto h-[730px]">
-                        <CategoryCard name="Burgrr" />
-                        <CategoryCard name="Fries" />
-                        <CategoryCard name="Chicken" />
-                        <CategoryCard name="Fish" />
-                        <CategoryCard name="Taco" />
-                        <CategoryCard name="Snacks" />
-                        <CategoryCard name="Beverages" />
+                    <div className="flex flex-col mt-5 gap-5 overflow-auto h-[730px]">
+
+                        {category.map((value, index) => {
+                            return (
+                                <div key={index}>
+                                    <CategoryCard name={value.name} />
+                                </div>
+                            )
+                        })}
 
                     </div>
                 </div>

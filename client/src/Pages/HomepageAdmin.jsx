@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 //import react icon
 import { GrFormEdit } from 'react-icons/gr';
 
@@ -17,6 +19,22 @@ import ModalEditCat from '../Component/Modals/ModalEditCat';
 
 const HomepageAdmin = () => {
 
+    const [category, setCategory] = useState([])
+
+    const onGetCategory = async () => {
+        try {
+            const category = await axios.get(`${process.env.REACT_APP_URL}products/category`)
+            console.log(category.data.data);
+            setCategory(category.data.data)
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        onGetCategory()
+    }, [])
+
     return (
         <div>
             <div className="flex h-screen">
@@ -31,13 +49,15 @@ const HomepageAdmin = () => {
                             {/* <Button style={"btn bg-green-900 hover:bg-green-900 text-bold text-xl w-[180px] h-[80px] text-white rounded-full"} text={"Add new +"} /> */}
                             <ModalNewCat />
                         </div>
-                        <CategoryCard name={"Burgrr"} item={<ModalEditCat />} />
-                        <CategoryCard name={"Fries"} item={<ModalEditCat />} />
-                        <CategoryCard name={"Chicken"} item={<ModalEditCat />} />
-                        <CategoryCard name={"Fish"} item={<ModalEditCat />} />
-                        <CategoryCard name={"Taco"} item={<ModalEditCat />} />
-                        <CategoryCard name={"Snacks"} item={<ModalEditCat />} />
-                        <CategoryCard name={"Drinks"} item={<ModalEditCat />} />
+                        {category.map((value, index) => {
+                            return (
+                                <div key={index}>
+                                    <CategoryCard name={value.name} item={<ModalEditCat />} />
+                                </div>
+                            )
+
+                        })}
+
 
                     </div>
                 </div>

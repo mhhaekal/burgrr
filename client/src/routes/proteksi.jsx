@@ -5,7 +5,7 @@ export default function Proteksi({ children, adminPage, cashierPage }) {
 
     const user = {
         username: 'bayu',
-        role: 'Admin'
+        role: 'Cashier'
     }
 
     const nav = useNavigate()
