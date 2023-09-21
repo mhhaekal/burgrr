@@ -5,7 +5,7 @@ const ModalNewCat = () => {
     return (
         <div>
             {/* <button className="btn rounded-full text-3xl bg-green-600 text-white hover:bg-green-600" onClick={() => document.getElementById('my_modal_1').showModal()}>+</button> */}
-            <Button style={"btn bg-green-900 hover:bg-green-900 text-bold text-xl w-[180px] h-[80px] text-white rounded-full"} text={"Add new +"} click={() => document.getElementById('my_modal_3').showModal()} />
+            <Button style={"btn bg-green-900 hover:bg-green-900 text-bold text-xl w-[180px] h-[80px] text-white rounded-full"} text={"Add new +"} onClick={() => document.getElementById('my_modal_3').showModal()} />
 
             <dialog id="my_modal_3" className="modal">
 
