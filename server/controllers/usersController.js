@@ -23,7 +23,7 @@ module.exports = {
       const hashMatch = await match(password, checkUser.dataValues.password);
       if (!hashMatch) throw { message: "Wrong Password!" };
 
-      const token = createJWT({ id: checkUser.dataValues.id }, "10s");
+      const token = createJWT({ id: checkUser.dataValues.id }, "1h");
 
       res.status(200).send({
         isError: false,

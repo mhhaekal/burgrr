@@ -75,7 +75,12 @@ export const onCheckislogin = () => async (dispatch) => {
     const token = localStorage.getItem("tokenLogin");
     console.log(token);
     const verif = await axios.get(`http://localhost:4000/users/verify/${token}`);
-    // console.log(verif);
+    console.log(verif);
+    setTimeout(() => {
+      dispatch(setUserName(verif.data.data.name));
+      dispatch(setImage(verif.data.data.image));
+      dispatch(setRole(verif.data.data.role));
+    }, 2000);
   } catch (error) {
     if (error.response.data.isError && localStorage.getItem("tokenLogin")) {
       localStorage.removeItem("tokenLogin");

@@ -11,7 +11,7 @@ module.exports = {
           username: "haekal",
           email: "mhaekal55@gmail.com",
           password: "$2a$10$dkgE.p4QWCd45PoFuAd3we6b.Xv6FM2IxArDNE3HqMWXAEFl6pf86",
-          image: "publicprofile1.jpeg",
+          image: `publicprofile1.jpeg`,
           role: "admin",
           status: "active",
           isDelete: 0,
