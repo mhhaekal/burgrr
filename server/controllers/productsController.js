@@ -1,3 +1,4 @@
+const { log } = require('console');
 const db = require('./../models')
 const { sequelize } = require("./../models");
 const { createProductService } = require('./../services/productService')
@@ -102,7 +103,9 @@ module.exports = {
                 message: 'Add to Cart Success',
                 data: cart
             })
+
         } catch (error) {
+            console.log(error)
             next(error)
         }
     },
