@@ -59,7 +59,7 @@ const Checkout = () => {
                             </select>
                         </div>
 
-                        <div className=""><Button click={() => onConfirm()} text="Confirm" style="btn" /> </div>
+                        <div className=""><Button onClick={() => onConfirm()} text="Confirm" style="btn" /> </div>
                     </div>
                 </div>
 

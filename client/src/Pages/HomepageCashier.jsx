@@ -30,15 +30,15 @@ const HomepageCashier = () => {
         }
     }
 
-    // const onFilterCat = async (id) => {
-    //     try {
-    //         setCatId(id)
-    //         const filter = await axios.get(`${process.env.REACT_APP_URL}products/all/${catId}`)
+    const onFilterCat = async (id) => {
+        try {
+            setCatId(id)
+            const filter = await axios.get(`${process.env.REACT_APP_URL}products/all/${catId}`)
 
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     // const onFilterProducts = async () => {
     //     try {
@@ -49,11 +49,11 @@ const HomepageCashier = () => {
     //     }
     // }
 
-    // useEffect(() => {
-    //     onGetCategory()
-    //     onFilterCat()
-    //     onFilterProducts()
-    // }, [])
+    useEffect(() => {
+        onGetCategory()
+        // onFilterCat()
+        // onFilterProducts()
+    }, [])
 
     return (
         <div>
