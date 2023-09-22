@@ -23,7 +23,7 @@ const HomepageCashier = () => {
     const [category, setCategory] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [sort, setSort] = useState("ASC");
-    // const [productId, setProductId] = useState("")
+    const [cart, setCart] = useState([])
 
     const onGetCategory = async () => {
         try {
@@ -46,14 +46,7 @@ const HomepageCashier = () => {
         }
     }
 
-    const getCart = async () => {
-        try {
-            const cart = await axios.get(`${process.env.REACT_APP_URL}products/allcart`)
-            console.log(cart)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
 
 
     const onFilterCat = async (id) => {
@@ -85,6 +78,17 @@ const HomepageCashier = () => {
             console.error("Error fetching filtered products:", error);
         }
     };
+    const getCart = async () => {
+        try {
+            const input = await axios.get(`${process.env.REACT_APP_URL}products/allcart`)
+            console.log(input.data.data)
+            setCart(input.data.data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // console.log(cart)
     useEffect(() => {
         onGetCategory()
         fetchFilteredProducts()
@@ -128,13 +132,13 @@ const HomepageCashier = () => {
                         <div className="drawer-end">
                             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                             <div className="drawer-content">
-                                <label htmlFor="my-drawer" className="btn bg-green-600 text-white hover:bg-green-600 drawer-button" onClick={getCart}> Cart</label>
+                                <label htmlFor="my-drawer" className="btn bg-green-600 text-white hover:bg-green-600 drawer-button" > Cart</label>
                             </div>
                             <div className="drawer-side">
                                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                                 <ul className="menu w-96 min-h-full bg-green-200 text-base-content">
                                     <div>
-                                        <Cart />
+                                        <Cart datas={cart} />
                                     </div>
 
                                 </ul>

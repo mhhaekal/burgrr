@@ -138,7 +138,12 @@ module.exports = {
   },
   getCart: async (req, res, next) => {
     try {
-      const cart = await db.cart.findAll()
+      const cart = await db.cart.findAll({
+        include: [{
+          model: db.product,
+          attributes: ["product_name", "product_image", "price"]
+        }]
+      })
       res.status(201).send({
         isError: false,
         message: "Get Cart Success",

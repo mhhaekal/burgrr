@@ -1,8 +1,10 @@
 import CartCard from "./CartCard"
 import Button from "./Button"
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 
-const Cart = () => {
-
+const Cart = ({ datas }) => {
+    console.log(datas)
 
     return (
         <div>
@@ -10,11 +12,16 @@ const Cart = () => {
                 <div>
                     <div className="pr-6 flex justify-end font-black text-4xl py-5">add to Cart</div>
                     <div className="flex flex-col gap-5 py-5 overflow-auto h-[600px]">
-                        <CartCard />
-                        <CartCard />
-                        <CartCard />
-                        <CartCard />
-                        <CartCard />
+                        {
+                            datas.map((value) => {
+                                return <CartCard
+                                    product_name={value.product.product_name}
+                                    image={value.product.product_image}
+                                    price={value.product.price}
+                                />
+                            })
+                        }
+
                     </div>
 
                     <div className="flex justify-center mt-10">
