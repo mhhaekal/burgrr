@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   category.init({
     name: DataTypes.STRING,
-    isDelete: DataTypes.INTEGER,
+    isDelete: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')

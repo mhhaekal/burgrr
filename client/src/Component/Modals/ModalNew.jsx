@@ -3,7 +3,6 @@ import Button from "../Button"
 import Input from "../Input"
 import axios from "axios"
 import { useRef, useState, useEffect } from "react"
-
 const ModalNew = () => {
     const inputProductName = useRef()
     const inputPrice = useRef()
@@ -15,7 +14,6 @@ const ModalNew = () => {
     const onGetCategory = async () => {
         try {
             const category = await axios.get(`${process.env.REACT_APP_URL}products/category`);
-            console.log(category.data.data);
             setCategory(category.data.data);
         } catch (error) {
             console.log(error);
@@ -34,13 +32,11 @@ const ModalNew = () => {
     }
     const onCreateProduct = async () => {
         try {
-            console.log(inputProductName.current.value);
             const inputs = {
                 product_name: inputProductName.current.value,
                 price: inputPrice.current.value,
                 description: inputDescription.current.value,
                 category_id: Number(inputCategory.current.value),
-
             }
             const fd = new FormData()
             fd.append('data', JSON.stringify(inputs))
@@ -75,7 +71,6 @@ const ModalNew = () => {
                     <div className="flex flex-col gap-5 mt-5">
                         <div>
                             <div className="text-white pb-2"> Product Name</div>
-                            {/* <input ref={inputProductName} type="text" className="input w-full" /> */}
                             <Input
                                 ref={inputProductName}
                                 type={"text"}
@@ -108,11 +103,6 @@ const ModalNew = () => {
                                         )
                                     })
                                 }
-                                {/* <option>Burgrr</option>
-                                <option>Fries</option>
-                                <option>Chicken</option>
-                                <option>Fish</option>
-                                <option>Snacks</option> */}
                             </select>
                         </div>
                         <div>
@@ -122,19 +112,15 @@ const ModalNew = () => {
                     </div>
                     <div className="modal-action">
                         <form method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
                             <div className="flex gap-5">
                                 <Button text={"cancel"} style={"btn bg-black text-white border-black hover:bg-black hover:border-black"} />
                                 <button onClick={onCreateProduct} className="btn bg">Submit</button>
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </dialog>
         </div>
     )
 }
-
 export default ModalNew
