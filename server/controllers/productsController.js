@@ -65,6 +65,23 @@ module.exports = {
       next(error);
     }
   },
+  getProductById: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const product = await db.product.findOne({
+        where: {
+          id
+        }
+      })
+      res.status(201).send({
+        isError: false,
+        message: "Get Product By id Success",
+        data: product,
+      });
+    } catch (error) {
+      next(error)
+    }
+  },
   getAllProductsByCat: async (req, res, next) => {
     try {
       const { catId, searchQuery, sort } = req.query;
@@ -117,6 +134,18 @@ module.exports = {
       }
     } catch (error) {
       next(error);
+    }
+  },
+  getCart: async (req, res, next) => {
+    try {
+      const cart = await db.cart.findAll()
+      res.status(201).send({
+        isError: false,
+        message: "Get Cart Success",
+        data: cart,
+      });
+    } catch (error) {
+      next(error)
     }
   },
   addToCart: async (req, res, next) => {

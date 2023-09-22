@@ -9,7 +9,6 @@ import { onLogout } from "../redux/Features";
 
 const Nav = () => {
   const { image } = useSelector((state) => state.user);
-  console.log(image);
   const dispatch = useDispatch();
   return (
     <div className="flex justify-center h-full">

@@ -2,6 +2,8 @@ import CartCard from "./CartCard"
 import Button from "./Button"
 
 const Cart = () => {
+
+
     return (
         <div>
             <div className="bg-green-200 h-screen w-full">

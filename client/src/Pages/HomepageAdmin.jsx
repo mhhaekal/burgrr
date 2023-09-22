@@ -145,19 +145,13 @@ const HomepageAdmin = () => {
                   <ProductCard
                     name={value.product_name}
                     button={<ModalEdit />}
-                    image={`http://localhost:4000/${value.image}`}
+                    image={value.product_image}
+                    description={value.description}
+                    price={value.price}
                   />
                 </div>
               );
             })}
-            {/* <ProductCard name={"Cheese Burgrr"} button={<ModalEdit />} /> */}
-            {/*<ProductCard name={"Double Cheese Burgrr"} button={<ModalEdit />} />
-            <ProductCard name={"Triple Cheese Burgrr"} button={<ModalEdit />} />
-            <ProductCard name={"Hamburgrr"} button={<ModalEdit />} />
-            <ProductCard name={"BIGBURGRR"} button={<ModalEdit />} />
-            <ProductCard name={"DOUBLE BIGBURGRR"} button={<ModalEdit />} />
-            <ProductCard name={"TRIPLE BIGBURGRR"} button={<ModalEdit />} />
-            <ProductCard name={"Just Burgrr"} button={<ModalEdit />} /> */}
           </div>
 
           <div className="pt-4 border border-t-green-600">
