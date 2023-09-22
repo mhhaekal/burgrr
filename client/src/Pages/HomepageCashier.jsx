@@ -24,6 +24,7 @@ const HomepageCashier = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [sort, setSort] = useState("ASC");
     const [cart, setCart] = useState([])
+    const [cartId, setCartId] = useState([])
 
     const onGetCategory = async () => {
         try {
@@ -34,7 +35,14 @@ const HomepageCashier = () => {
             console.log(error);
         }
     }
-
+    const onGetCart = async () => {
+        try {
+            const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
+            console.log(cart)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const addCart = async (id) => {
         try {
             // setProductId(id)
@@ -45,9 +53,16 @@ const HomepageCashier = () => {
             console.log(error)
         }
     }
-
-
-
+    const addQuantity = async (id) => {
+        try {
+            setCartId(id)
+            // const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
+            // console.log(`products/cart/${id}`)
+            toast.success('Product Successfully Added to Cart')
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const onFilterCat = async (id) => {
         try {
@@ -88,11 +103,13 @@ const HomepageCashier = () => {
             console.log(error)
         }
     }
+
     // console.log(cart)
     useEffect(() => {
         onGetCategory()
         fetchFilteredProducts()
         getCart()
+        onGetCart()
         // onFilterCat()
         // onFilterProducts()
     }, [])
@@ -153,7 +170,7 @@ const HomepageCashier = () => {
                                 <div key={index}>
                                     <ProductCard
                                         name={value.product_name}
-                                        button={<RoundButton onClick={() => addCart(value.id)} text={'+'} />}
+                                        button={<RoundButton onClick={() => addQuantity(value.id)} text={'+'} />}
                                         image={value.product_image}
                                         description={value.description}
                                         price={value.price}

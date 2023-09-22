@@ -14,6 +14,7 @@ Router.get("/all/:id", productsController.getProductById);
 Router.get("/filtered", productsController.getAllProductsByCat);
 Router.get("/allcart", productsController.getCart);
 Router.post("/cart/:productId", productsController.addToCart);
+Router.post("/minuscart/:productId", productsController.minusCart);
 Router.patch("/deleteproduct/:productId", productsController.deleteProduct);
 Router.patch("/deletecategory/:categoryId", productsController.deleteCategory);
 

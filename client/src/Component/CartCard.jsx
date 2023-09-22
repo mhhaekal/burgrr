@@ -3,16 +3,7 @@ import axios from "axios"
 import toast from "react-hot-toast"
 
 const CartCard = (props) => {
-    const addCart = async (id) => {
-        try {
-            // setProductId(id)
-            // console.log(`products/cart/${id}`)
-            const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${id}`)
-            toast.success('Product Successfully Added to Cart')
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     return (
         <div>
             <div className="px-5">
@@ -29,8 +20,9 @@ const CartCard = (props) => {
                         </div>
                         <div className="flex gap-5 mt-2">
                             <RoundButton text="-" />
-                            <div className="flex items-center text-md">x 1</div>
+                            <div className="flex items-center text-md">x {props.quantity}</div>
                             {/* <RoundButton onClick={ } text="+" /> */}
+                            {props.button}
                         </div>
                     </div>
 

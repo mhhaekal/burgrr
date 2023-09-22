@@ -1,5 +1,7 @@
 import Button from "../Button"
 import Input from "../Input"
+import axios from "axios"
+import { useRef, useState, useEffect } from "react"
 
 const ModalNewCat = () => {
     return (

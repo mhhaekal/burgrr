@@ -2,10 +2,33 @@ import CartCard from "./CartCard"
 import Button from "./Button"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import RoundButton from "./RoundButton"
+import toast from "react-hot-toast"
 
 const Cart = ({ datas }) => {
     console.log(datas)
+    const [cartId, setCartId] = useState([])
 
+    const onGetCart = async () => {
+        try {
+            const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
+            console.log(cart)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const addCart = async (id) => {
+        try {
+            setCartId(id)
+            // console.log(`products/cart/${id}`)
+            toast.success('Product Successfully Added to Cart')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        onGetCart()
+    }, [onGetCart])
     return (
         <div>
             <div className="bg-green-200 h-screen w-full">
@@ -18,6 +41,8 @@ const Cart = ({ datas }) => {
                                     product_name={value.product.product_name}
                                     image={value.product.product_image}
                                     price={value.product.price}
+                                    quantity={value.quantity}
+                                    button={<RoundButton text="+" onClick={() => addCart(value.product_id)} />}
                                 />
                             })
                         }

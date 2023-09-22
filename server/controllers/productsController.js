@@ -188,6 +188,52 @@ module.exports = {
       next(error);
     }
   },
+  minusCart: async (req, res, next) => {
+    try {
+      const { productId } = req.params;
+      // buat jwt menyusul
+      // const { userId } = req.dataToken;
+      const product = await db.product.findOne({
+        where: {
+          id: productId,
+        },
+      });
+      const cart = await db.cart.findOne({
+        where: {
+          product_id: product.id,
+        },
+      });
+      console.log(cart.dataValues.quantity)
+      // buat jwt menyusul
+      // const cart = await db.cart.create({ product, product_id: productId, user_id: userId })
+      if (cart.dataValues.quantity === 1) {
+        await db.cart.destroy({
+          where: {
+            product_id: productId
+          }
+        })
+      } else if (cart) {
+        await db.cart.update(
+          {
+            quantity: cart.dataValues.quantity - 1
+          },
+          {
+            where: {
+              id: cart.id
+            }
+          }
+        );
+      }
+      res.status(201).send({
+        isError: false,
+        message: "Update Cart Success",
+        data: cart,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  },
   deleteProduct: async (req, res, next) => {
     try {
       const { productId } = req.params;
