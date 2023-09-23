@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { onCheckislogin } from "./redux/Features";
 import ChangePass from "./Pages/changePassword";
 import route from "./routes/route";
+import Verify from "./Pages/verify";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(() => {
     if (location.pathname.startsWith("verify/")) return;
+    if (location.pathname.startsWith("change/")) return;
     if (location.pathname === "/login") return;
     dispatch(onCheckislogin());
   }, []);
@@ -27,9 +29,9 @@ function App() {
         <Route path="/cashier/checkout" element={<Checkout />} />
         <Route path="/cashier/profile" element={<CashierProfile />} />
         <Route path="/admin/profile" element={<AdminProfile />} />
-        <Route path="/admin/data" element={<DataEmployee />} />
+  <Route path="/admin/data" element={<DataEmployee />} /> */}
         <Route path="/verify/:token" element={<Verify />} />
-        <Route path="/change/:token" element={<ChangePass />} /> */}
+        <Route path="/change/:token" element={<ChangePass />} />
         {route.map((value) => value)}
       </Routes>
     </div>
