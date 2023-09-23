@@ -164,10 +164,15 @@ module.exports = {
         },
       });
       const cart = await db.cart.findOne({
+        include: [{
+          model: db.product,
+          attributes: ["price"]
+        }],
         where: {
           product_id: product.id,
         },
       });
+
       // buat jwt menyusul
       // const cart = await db.cart.create({ product, product_id: productId, user_id: userId })
       if (cart) {
@@ -176,18 +181,54 @@ module.exports = {
           { where: { id: cart.id } }
         );
       } else {
-        await db.cart.create({ product, product_id: productId });
+        await db.cart.create({ product, product_id: productId, total: product.price });
       }
+
+      const cart1 = await db.cart.findOne({
+        include: [{
+          model: db.product,
+          attributes: ["price"]
+        }],
+        where: {
+          product_id: product.id,
+        },
+      });
+
+      const total = (cart1.dataValues.quantity) * (cart1.dataValues.product.price)
+      console.log(total);
+
+      const totalFinal = await db.cart.sum('total')
+      console.log(totalFinal);
+
+      await db.cart.update(
+        { total: total },
+        { where: { id: cart.id } }
+      );
+
       res.status(201).send({
         isError: false,
         message: "Add to Cart Success",
-        data: cart,
+        data: cart1,
       });
     } catch (error) {
       console.log(error);
       next(error);
     }
   },
+
+  getTotal: async (req, res, next) => {
+    try {
+      const cart = await db.cart.sum("total")
+      res.status(201).send({
+        isError: false,
+        message: "Get Total Success",
+        data: cart,
+      });
+    } catch (error) {
+      next(error)
+    }
+  },
+
   minusCart: async (req, res, next) => {
     try {
       const { productId } = req.params;

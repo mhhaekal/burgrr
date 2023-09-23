@@ -13,6 +13,7 @@ Router.get("/all", productsController.getAllProducts);
 Router.get("/all/:id", productsController.getProductById);
 Router.get("/filtered", productsController.getAllProductsByCat);
 Router.get("/allcart", productsController.getCart);
+Router.get("/total", productsController.getTotal);
 Router.post("/cart/:productId", productsController.addToCart);
 Router.post("/minuscart/:productId", productsController.minusCart);
 Router.patch("/deleteproduct/:productId", productsController.deleteProduct);

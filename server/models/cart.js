@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    total: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     }
   }, {
     sequelize,

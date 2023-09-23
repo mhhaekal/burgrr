@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import RoundButton from "./RoundButton"
 import toast from "react-hot-toast"
+import { Link } from "react-router-dom"
 
 const Cart = ({ datas }) => {
     console.log(datas)
@@ -50,7 +51,11 @@ const Cart = ({ datas }) => {
                     </div>
 
                     <div className="flex justify-center mt-10">
-                        <Button style="btn bg-green-600 hover:bg-green-600 text-white text-3xl w-[300px] h-[50px] border-green-600" text="Checkout" />
+                        <Link to={'/cashier/checkout'}>
+                            <Button style="btn bg-green-600 hover:bg-green-600 text-white text-3xl w-[300px] h-[50px] border-green-600" text="Checkout" />
+                        </Link>
+
+
                     </div>
                 </div>
 
