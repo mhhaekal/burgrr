@@ -3,11 +3,14 @@ const Router = express.Router();
 
 // Import All Controller
 const { usersController } = require("../controllers");
-const { verify } = require("./../lib/jwt");
+const { verify, verifyByParams } = require("./../lib/jwt");
 
-const { validation, validate } = require("./../lib/validator");
+const { validation, validate, validationHeaders } = require("./../lib/validator");
 
 Router.post("/login", validation(), validate, usersController.login);
 Router.post("/register", validation(), validate, usersController.register);
-Router.get("/verify/:token", verify, usersController.verifyToken);
+Router.post("/req", usersController.reqChangePassword);
+Router.get("/verify/", verify, usersController.verifyToken);
+Router.get("/verifyJWT/:token", verifyByParams, usersController.verifyToken);
+Router.get("/changepass", verify, validationHeaders, usersController.checkPassword);
 module.exports = Router;

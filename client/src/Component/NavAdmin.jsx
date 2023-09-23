@@ -43,7 +43,7 @@ const NavAdmin = () => {
             </div>
           </Link>
 
-          <Link to={"/login"}>
+          <Link to={"/"}>
             <div>
               <TbLogout onClick={() => dispatch(onLogout())} className="text-5xl text-white" />
             </div>

@@ -11,7 +11,14 @@ import DataEmployee from "../Pages/DataEmployee";
 import Protected from "./protected";
 
 const route = [
-  <Route path="/login" element={<Login />} />,
+  <Route
+    path="/"
+    element={
+      <Protected>
+        <Login />
+      </Protected>
+    }
+  />,
 
   <Route
     path="/cashier"
