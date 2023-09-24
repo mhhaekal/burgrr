@@ -14,8 +14,6 @@ const Login = () => {
   const { role } = useSelector((state) => state.user);
 
   const handleLogin = (inputEmail, inputPassword) => {
-    console.log(inputEmail);
-    console.log(inputPassword);
     dispatch(onLoginAsync(inputEmail, inputPassword));
   };
 

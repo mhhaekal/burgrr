@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-//import react icon
 import { GrFormEdit } from "react-icons/gr";
-
-//import component
 import NavAdmin from "../Component/NavAdmin";
 import CategoryCard from "../Component/CategoryCard";
 import Searchbar from "../Component/Searchbar";
@@ -22,6 +19,11 @@ const HomepageAdmin = () => {
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sort, setSort] = useState("ASC");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostsPerPage] = useState(8);
+  const lastPostIndex = currentPage * postPerPage;
+  const firstPostIndex = lastPostIndex - postPerPage;
+  const currentPosts = products.slice(firstPostIndex, lastPostIndex);
 
   const onGetCategory = async () => {
     try {
@@ -32,16 +34,6 @@ const HomepageAdmin = () => {
       console.log(error);
     }
   };
-
-  //   const onGetProduct = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.REACT_APP_URL}products/all`);
-  //       setProducts(res.data.data);
-  //       console.log(res);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
 
   const handleChange = (event) => {
     try {
@@ -54,8 +46,7 @@ const HomepageAdmin = () => {
 
   const onFilterCat = async (id) => {
     try {
-      console.log(">>>");
-      console.log(id);
+      setCurrentPage(1);
       setCatId(id);
     } catch (error) {
       console.log(error);
@@ -64,7 +55,9 @@ const HomepageAdmin = () => {
 
   const fetchFilteredProducts = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_URL}products/filtered?catId=${catId}&searchQuery=${searchQuery}&sort=${sort}`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_URL}products/filtered?catId=${catId}&searchQuery=${searchQuery}&sort=${sort}`
+      );
       console.log(response);
       setProducts(response.data.data);
     } catch (error) {
@@ -72,22 +65,9 @@ const HomepageAdmin = () => {
     }
   };
 
-
-
   useEffect(() => {
     onGetCategory();
-    // onFilterCat();
-    // if (catId) {
     fetchFilteredProducts();
-    // } else {
-    //   onGetProduct();
-    // }
-
-    // console.log(products);
-    console.log(catId);
-    // onFilterProducts()
-    console.log(searchQuery);
-    console.log(sort);
   }, [catId, searchQuery, sort]);
 
   return (
@@ -139,7 +119,20 @@ const HomepageAdmin = () => {
           </div>
 
           <div className="grid grid-cols-4 gap-5 p-5 h-[600px] overflow-auto w-full">
-            {products.map((value, index) => {
+            {/* {products.map((value, index) => {
+              return (
+                <div key={index}>
+                  <ProductCard
+                    name={value.product_name}
+                    button={<ModalEdit />}
+                    image={value.product_image}
+                    description={value.description}
+                    price={value.price}
+                  />
+                </div>
+              );
+            })} */}
+            {currentPosts.map((value, index) => {
               return (
                 <div key={index}>
                   <ProductCard
@@ -156,7 +149,12 @@ const HomepageAdmin = () => {
 
           <div className="pt-4 border border-t-green-600">
             <div className="text-xl flex justify-center items-center ">8 Product(s)</div>
-            <Pagination />
+            <Pagination
+              totalPost={products.length}
+              postsPerPage={postPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
           </div>
         </div>
       </div>
