@@ -125,7 +125,7 @@ const HomepageAdmin = () => {
               <Searchbar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
               <Button
                 style={`btn bg-green-600 hover:bg-green-600 text-white w-[40px]`}
-                text={"x"}
+                text={"Reset"}
                 onClick={() => setSearchQuery("")}
               />
             </div>

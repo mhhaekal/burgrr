@@ -13,7 +13,8 @@ const Cart = ({ datas }) => {
     const onGetCart = async () => {
         try {
             const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
-            console.log(cart)
+            // console.log(cart)
+            console.log('>>>')
         } catch (error) {
             console.log(error)
         }

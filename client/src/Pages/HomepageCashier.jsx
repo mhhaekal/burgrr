@@ -24,7 +24,7 @@ const HomepageCashier = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [sort, setSort] = useState("ASC");
     const [cart, setCart] = useState([])
-    const [cartId, setCartId] = useState([])
+    const [cartId1, setCartId1] = useState([])
 
     const onGetCategory = async () => {
         try {
@@ -35,27 +35,20 @@ const HomepageCashier = () => {
             console.log(error);
         }
     }
-    const onGetCart = async () => {
-        try {
-            const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
-            console.log(cart)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const addCart = async (id) => {
-        try {
-            // setProductId(id)
-            // console.log(`products/cart/${id}`)
-            const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${id}`)
-            toast.success('Product Successfully Added to Cart')
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const onGetCart = async () => {
+    //     try {
+    //         const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
+    //         console.log(cart)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
     const addQuantity = async (id) => {
         try {
-            setCartId(id)
+
+            console.log(id);
+            setCartId1(id)
+            console.log('>>>');
             // const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
             // console.log(`products/cart/${id}`)
             toast.success('Product Successfully Added to Cart')
@@ -63,16 +56,40 @@ const HomepageCashier = () => {
             console.log(error)
         }
     }
+    const addCart = async () => {
+        try {
+            // setProductId(id)
+            // console.log(`products/cart/${id}`)
+            console.log('1>>>');
+            // console.log(`${process.env.REACT_APP_URL}products/cart/${cartId}`);
+            const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId1}`)
+            console.log('2>>>');
+            // toast.success('Product Successfully Added to Cart')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const onFilterCat = async (id) => {
         try {
-            setCatId(id)
-            const filter = await axios.get(`${process.env.REACT_APP_URL}products/all/${catId}`)
-
+            console.log(">>>");
+            console.log(id);
+            setCatId(id);
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
+    // const onFilterCat = async (id) => {
+    //     try {
+    //         setCatId(id)
+    //         const filter = await axios.get(`${process.env.REACT_APP_URL}products/all/${catId}`)
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     // const onFilterProducts = async () => {
     //     try {
@@ -103,15 +120,28 @@ const HomepageCashier = () => {
         }
     }
 
-    // console.log(cart)
+    const handleChange = (event) => {
+        try {
+            console.log(event.target.value);
+            setSort(event.target.value);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    console.log(cartId1)
     useEffect(() => {
+        addCart()
         onGetCategory()
         fetchFilteredProducts()
         getCart()
-        onGetCart()
+        // onGetCart()
         // onFilterCat()
         // onFilterProducts()
-    }, [])
+        console.log(catId);
+        console.log(searchQuery);
+        console.log(sort);
+    }, [catId, searchQuery, sort])
 
     return (
         <div>
@@ -120,10 +150,13 @@ const HomepageCashier = () => {
                 <div className="w-[20%]">
                     <div className="flex justify-center text-4xl font-black my-5">Category</div>
                     <div className="flex flex-col mt-5 gap-5 overflow-auto h-[730px]">
+                        <CategoryCard name={"Show All"} onClick={() => onFilterCat("")} />
                         {category.map((value, index) => {
                             return (
                                 <div key={index}>
-                                    <CategoryCard name={value.name} />
+                                    <CategoryCard
+                                        onClick={() => onFilterCat(value.id)}
+                                        name={value.name} />
                                 </div>
                             )
                         })}
@@ -133,9 +166,19 @@ const HomepageCashier = () => {
                     <div className=" flex gap-5 justify-between border border-white border-b-green-600 pt-5 pb-5 px-10">
                         <img className="w-[150px] h-[50px]" src="./logoburgrr.png" alt="" />
                         <div className="flex gap-2">
-                            <Searchbar />
-                            <Button style="btn bg-green-600 hover:bg-green-600 text-white w-[80px]" text="Search" />
-                            <SortButton className="border" />
+                            <Searchbar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                            <Button
+                                style={`btn bg-green-600 hover:bg-green-600 text-white w-[100px]`}
+                                text={"Reset"}
+                                onClick={() => setSearchQuery("")}
+                            />
+                            <SortButton
+                                onChange={handleChange}
+                                value1={"ASC"}
+                                value2={"DESC"}
+                                //   value3={""}
+                                className="border"
+                            />
                         </div>
                         <div className="drawer-end">
                             <input id="my-drawer" type="checkbox" className="drawer-toggle" />

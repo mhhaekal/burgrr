@@ -16,6 +16,9 @@ const Checkout = () => {
     const [cart, setCart] = useState([])
     const [cartId, setCartId] = useState([])
     const [total, setTotal] = useState([])
+    const inputCash = useRef()
+    const [changes, setChanges] = useState([])
+    const [listProductName, setListProductName] = useState([])
 
 
     const onConfirm = async () => {
@@ -72,11 +75,74 @@ const Checkout = () => {
         }
     }
 
+    const submitInput = async () => {
+        try {
+            const input = Number(inputCash.current.value)
+            console.log(input);
+            const totalFinal = total + (total * 10 / 100)
+            console.log(totalFinal);
+            let change = 0
+            if (input < totalFinal) {
+                toast.error('Insufficient Cash')
+            } else if (input === totalFinal) {
+                console.log(change);
+                toast.success('Cash Input Confirm, Please Proceed to Payment')
+                setChanges(change)
+            } else {
+                change = input - totalFinal
+                console.log(change);
+                toast.success('Cash Input Confirm, Please Proceed to Payment')
+                setChanges(change)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    const submitTransaction = async () => {
+        try {
+            // console.log(cart[0].product.product_name);
+            // const list = cart.map((value, index) => {
+            //     return (
+            //         value.product.product_name
+            //     )
+            // })
+            // setListProductName(list)
+            // console.log(list);
+            console.log(cart);
+            const input = {
+                "total": (total + (total * 10 / 100)),
+                "details": [
+                    { listProductName }
+                    // {
+                    //     "product_name": "AA",
+                    //     "product_price": 10000,
+                    //     "quantity": 2,
+                    //     "product_id": 1
+                    // },
+                    // {
+                    //     "product_name": "BB",
+                    //     "product_price": 10000,
+                    //     "quantity": 3,
+                    //     "product_id": 2
+                    // }
+                ]
+            }
+            console.log(input);
+            // const trans = await axios.post(`${process.env.REACT_APP_URL}transaction/all`)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         onConfirm()
         getCart()
         getTotal()
         addCart()
+        submitTransaction()
         // onGetCart()
     }, [])
 
@@ -100,21 +166,17 @@ const Checkout = () => {
                                         total={`Rp ${(value.product.price * value.quantity).toLocaleString()}`}
                                     />
                                 </div>
-
                             )
                         })
                     }
                 </div>
-
                 <div className="py-5 flex text-xl font-semibold justify-between border border-x-white border-y-green-600">
                     <div>Subtotal</div>
                     <div>Rp. {total.toLocaleString()}</div>
                 </div>
-
                 <div className="mt-5 text-xl font-semibold">
                     <div>Payment Method
                     </div>
-
                     <div className="flex pt-5 gap-5">
                         <div className="">
                             <select ref={payment} className="select select-bordered w-full max-w-xs bg-green-600 text-white hover:text-white">
@@ -125,50 +187,44 @@ const Checkout = () => {
                                 <option value={"card"}>Card</option>
                             </select>
                         </div>
-
                         <div className=""><Button onClick={() => onConfirm()} text="Confirm" style="btn" /> </div>
                     </div>
                 </div>
-
             </div>
-
             <div className="bg-green-600 w-[40%]">
-
                 <div className="flex justify-end m-5 p-5 text-4xl font-black text-white">Transaction Summary</div>
                 <div className="bg-green-900 text-white m-5 p-5 flex flex-col gap-5">
                     <div className="flex justify-between">
                         <div>Subtotal</div>
                         <div>Rp. {total.toLocaleString()}</div>
                     </div>
-
                     <div className="flex justify-between">
                         <div>Tax 10%</div>
                         <div>Rp. {(total * 10 / 100).toLocaleString()}</div>
                     </div>
-
                     <div className="w-[full] bg-white h-[3px]"></div>
-
                     <div className="flex justify-between">
                         <div className="font-bold text-xl">TOTAL</div>
                         <div className="font-bold text-xl">Rp. {(total + (total * 10 / 100)).toLocaleString()}</div>
                     </div>
                 </div>
-
                 {
                     paymentMethod === "cash" ?
                         <div>
                             <div className="flex flex-col justify-center mx-5 gap-3">
                                 <div className="flex justify-end text-2xl font-semibold text-white">Input Amount</div>
-                                <Input type="number" placeholder="Rp" style="input input-bordered w-full mr-5" />
+                                {/* <Input type="number" placeholder="Rp" style="input input-bordered w-full mr-5" /> */}
+                                <input type="number" ref={inputCash} placeholder="Rp" className="input input-bordered w-full mr-5" />
+                                <button onClick={submitInput} className="btn bg-green-800 text-white">
+                                    Confirm
+                                </button>
                             </div>
-
                             <div className="flex flex-col justify-center mx-5 my-5 pb-10 gap-3">
                                 <div className="flex justify-end text-2xl font-semibold text-white">Changes</div>
-                                <div className="flex justify-end text-white text-lg">Rp ... </div>
+                                <div className="flex justify-end text-white text-lg">Rp {changes.toLocaleString()} </div>
                             </div>
                         </div> : null
                 }
-
                 <div className="flex flex-col justify-center items-center gap-5">
                     <Button style="btn hover:bg-white bg-white text-green-600 flex justify-center rounded-xl text-3xl font-extrabold w-[500px] h-[50px] flex items-center" text="Process Payment" />
                     <Link to={'/cashier'}>

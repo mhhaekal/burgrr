@@ -33,10 +33,11 @@ const NavAdmin = () => {
               <LuClipboardEdit className="text-5xl text-white" />
             </div>
           </Link>
-
-          <div>
-            <BsFillPieChartFill className="text-5xl text-white" />
-          </div>
+          <Link to={"/admin/report"}>
+            <div>
+              <BsFillPieChartFill className="text-5xl text-white" />
+            </div>
+          </Link>
           <Link to={"/admin/data"}>
             <div>
               <FaCircleUser className="text-5xl text-white" />

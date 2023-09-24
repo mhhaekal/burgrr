@@ -1,3 +1,4 @@
+const { log } = require('handlebars');
 const db = require('./../models')
 const { sequelize } = require("./../models");
 const { transactionService1 } = require('./../services/transactionService')
@@ -56,4 +57,21 @@ module.exports = {
             next(error)
         }
     },
+    getTotal: async (req, res, next) => {
+        try {
+            const data = req.body.createdAt
+            const total = await db.transaction.findOne({
+                where: {
+                    createdAt: `${data} 00:00:00`
+                }
+            })
+            res.status(201).send({
+                isError: false,
+                message: 'Get Total Success',
+                data: total
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

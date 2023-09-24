@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     total: DataTypes.INTEGER,
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: sequelize.literal('(curdate())')
     },
     updatedAt: {
       type: DataTypes.DATE,

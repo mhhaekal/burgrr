@@ -9,6 +9,7 @@ import CashierProfile from "../Pages/CashierProfile";
 import AdminProfile from "../Pages/AdminProfile";
 import DataEmployee from "../Pages/DataEmployee";
 import Protected from "./protected";
+import AdminDash from "../Pages/AdminDash";
 
 const route = [
   <Route
@@ -70,6 +71,15 @@ const route = [
     element={
       <Protected adminPage={true}>
         <DataEmployee />
+      </Protected>
+    }
+  />,
+
+  <Route
+    path="/admin/report"
+    element={
+      <Protected adminPage={true}>
+        <AdminDash />
       </Protected>
     }
   />,
