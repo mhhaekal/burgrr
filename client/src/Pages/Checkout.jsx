@@ -3,6 +3,9 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import toast from "react-hot-toast"
+import { useSelector } from "react-redux"
+import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 //import component
 import CartCard from "../Component/CartCard"
@@ -11,6 +14,7 @@ import Input from "../Component/Input"
 import RoundButton from "../Component/RoundButton"
 
 const Checkout = () => {
+    const { id, image, userName, email } = useSelector((state) => state.user);
     const [paymentMethod, setPaymentMethod] = useState(false)
     const payment = useRef()
     const [cart, setCart] = useState([])
@@ -19,6 +23,7 @@ const Checkout = () => {
     const inputCash = useRef()
     const [changes, setChanges] = useState([])
     const [listProductName, setListProductName] = useState([])
+    const navigate = useNavigate()
 
 
     const onConfirm = async () => {
@@ -54,17 +59,6 @@ const Checkout = () => {
         }
     }
 
-    // const onGetCart = async () => {
-    //     try {
-    //         console.log(">>>");
-    //         const cart1 = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
-    //         console.log("2>>>");
-    //         console.log(cart1)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     const getTotal = async () => {
         try {
             const total = await axios.get(`${process.env.REACT_APP_URL}products/total`)
@@ -99,50 +93,46 @@ const Checkout = () => {
             console.log(error);
         }
     }
-
-
     const submitTransaction = async () => {
         try {
-            // console.log(cart[0].product.product_name);
-            // const list = cart.map((value, index) => {
-            //     return (
-            //         value.product.product_name
-            //     )
-            // })
-            // setListProductName(list)
-            // console.log(list);
-            console.log(cart);
+            const details = cart.map((value, index) => {
+                return (
+
+                    {
+                        product_name: value.product.product_name,
+                        product_price: value.product.price,
+                        quantity: value.quantity
+                    }
+
+                )
+            })
             const input = {
                 "total": (total + (total * 10 / 100)),
-                "details": [
-                    { listProductName }
-                    // {
-                    //     "product_name": "AA",
-                    //     "product_price": 10000,
-                    //     "quantity": 2,
-                    //     "product_id": 1
-                    // },
-                    // {
-                    //     "product_name": "BB",
-                    //     "product_price": 10000,
-                    //     "quantity": 3,
-                    //     "product_id": 2
-                    // }
-                ]
+                "user_id": id,
+
+                details
+
             }
             console.log(input);
-            // const trans = await axios.post(`${process.env.REACT_APP_URL}transaction/all`)
+            const trans = await axios.post(`${process.env.REACT_APP_URL}transaction/all`, input)
+            toast.success('Transaction Success')
+            setTimeout(() => {
+
+                navigate('/cashier')
+            }, 2000)
+            console.log(trans);
         } catch (error) {
             console.log(error);
         }
     }
+    console.log((total + (total * 10 / 100)));
 
     useEffect(() => {
         onConfirm()
-        getCart()
         getTotal()
+        getCart()
         addCart()
-        submitTransaction()
+        // submitTransaction()
         // onGetCart()
     }, [])
 
@@ -226,7 +216,7 @@ const Checkout = () => {
                         </div> : null
                 }
                 <div className="flex flex-col justify-center items-center gap-5">
-                    <Button style="btn hover:bg-white bg-white text-green-600 flex justify-center rounded-xl text-3xl font-extrabold w-[500px] h-[50px] flex items-center" text="Process Payment" />
+                    <Button onClick={submitTransaction} style="btn hover:bg-white bg-white text-green-600 flex justify-center rounded-xl text-3xl font-extrabold w-[500px] h-[50px] flex items-center" text="Process Payment" />
                     <Link to={'/cashier'}>
                         <Button style="btn hover:bg-black hover:border-black bg-black text-white flex justify-center rounded-xl text-3xl border-black font-extrabold w-[500px] h-[50px] flex items-center" text="Cancel" />
                     </Link>

@@ -3,7 +3,7 @@ const db = require('./../models')
 module.exports = {
     transactionService1: async (data) => {
         try {
-            const transaction = await db.transaction.create({ total: data.total })
+            const transaction = await db.transaction.create({ total: data.total, user_id: data.user_id })
             const detail = data.details.map(value => {
                 return { ...value, transaction_id: transaction.dataValues.id }
             })
