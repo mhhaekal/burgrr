@@ -120,7 +120,7 @@ const HomepageAdmin = () => {
                   <CategoryCard
                     onClick={() => onFilterCat(value.id)}
                     name={value.name}
-                    // item={<ModalEditCat />}
+                  // item={<ModalEditCat />}
                   />
                   <div className="absolute right-3 top-0 ">
                     {/* <ModalEditCat /> */}

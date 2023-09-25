@@ -9,6 +9,7 @@ const { verify } = require("./../lib/jwt");
 Router.post("/add", upload, productsController.createProduct);
 Router.post("/addcategory", productsController.createCategory);
 Router.get("/category", productsController.getCategory);
+Router.patch("/editcategory", productsController.editCategory);
 Router.get("/all", productsController.getAllProducts);
 Router.get("/all/:id", productsController.getProductById);
 Router.get("/filtered", productsController.getAllProductsByCat);

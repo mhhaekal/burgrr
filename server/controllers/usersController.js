@@ -6,6 +6,7 @@ const fs = require("fs").promises;
 const handlebars = require("handlebars");
 const transporter = require("./../helper/transporter");
 const { log } = require("console");
+const { deleteFiles } = require('./../helper/deleteFiles');
 
 module.exports = {
   login: async (req, res, next) => {
@@ -174,6 +175,71 @@ module.exports = {
       });
     } catch (error) {
       next(error);
+    }
+  },
+  getEmployeeData: async (req, res, next) => {
+    try {
+      const employee = await db.user.findAll({
+        where: {
+          role: "cashier"
+        }
+      })
+      res.status(200).send({
+        isError: false,
+        message: "success change password!",
+        data: employee
+      });
+    } catch (error) {
+      next(error)
+    }
+  },
+  getTokenUser: async (req, res, next) => {
+    try {
+      const { id } = req.dataToken;
+      console.log(id);
+      const verif = await db.user.findOne({ where: { id } });
+      if (!verif) throw { message: "account is not exist" };
+      // console.log(verif);
+
+      res.status(200).send({
+        isError: false,
+        message: "account is found",
+        data: verif.dataValues,
+      });
+    } catch (error) {
+      next(error)
+    }
+  },
+  updateImage: async (req, res, next) => {
+    try {
+      // 1. Ambil id image
+      const { idImage } = req.params
+      console.log(req.files);
+      // 2. Ambil path image lama
+      const findImage = await db.user.findOne({
+        where: {
+          id: idImage
+        }
+      })
+
+      // 3. Update new path on table
+      console.log(req.files.images[0].path);
+      const newImage = await db.user.update({ image: req.files.images[0].path }, { where: { id: idImage } })
+      console.log('<<<');
+      console.log(newImage);
+      // 4. Delete image lama
+      deleteFiles({ images: [{ path: findImage.dataValues.image }] })
+
+      // 5. Kirim response
+      res.status(201).send({
+        isError: false,
+        message: 'Update Image Success!',
+        data: newImage
+      })
+    } catch (error) {
+      console.log(error);
+      deleteFiles(req.files)
+      next(error)
     }
   },
 };

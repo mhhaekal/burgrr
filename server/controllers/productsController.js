@@ -10,6 +10,8 @@ const { deleteProductService1 } = require("./../services/productService");
 const { deleteProductService2 } = require("./../services/productService");
 const { deleteCategoryService1 } = require("./../services/productService");
 const { deleteCategoryService2 } = require("./../services/productService");
+const { editCategoryService1 } = require("./../services/productService");
+const { editCategoryService2 } = require("./../services/productService");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -51,6 +53,20 @@ module.exports = {
       });
     } catch (error) {
       next(error);
+    }
+  },
+  editCategory: async (req, res, next) => {
+    try {
+      const { id, name } = req.body
+      const category = await editCategoryService1(id)
+      const categoryUpdate = await editCategoryService2(id, name)
+      res.status(201).send({
+        isError: false,
+        message: "Get Category Success",
+        data: categoryUpdate,
+      });
+    } catch (error) {
+      next(error)
     }
   },
   getAllProducts: async (req, res, next) => {

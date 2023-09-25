@@ -15,14 +15,10 @@ const DataEmployee = () => {
         <div>
             <div className="flex h-screen">
                 <NavAdmin />
-
-
                 <div className=" border w-screen ">
-
                     <div className="flex gap-10 text-5xl font-black pl-10 pt-10 pb-10 w-full">Data Employee
                         <ModalNewCashier />
                     </div>
-
                     <div className="mx-10 h-[600px] ">
                         <table className="table table-sm">
                             <thead className="bg-green-600 text-white text-xl">
@@ -45,19 +41,13 @@ const DataEmployee = () => {
                                     </td>
                                     <td><ModalEditCashier /></td>
                                 </tr>
-
-
-
                             </tbody>
                         </table>
                     </div>
-
                     <div className="flex justify-center">
                         <Pagination className="" />
                     </div>
                 </div>
-
-
             </div>
         </div>
     )

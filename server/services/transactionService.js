@@ -31,4 +31,15 @@ module.exports = {
             return error
         }
     },
+    transactionService4: async (data) => {
+        try {
+            return await db.transaction.findOne({
+                where: {
+                    createdAt: `${data} 00:00:00`
+                }
+            })
+        } catch (error) {
+            return error
+        }
+    },
 }

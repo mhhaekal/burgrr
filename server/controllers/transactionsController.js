@@ -4,6 +4,7 @@ const { sequelize } = require("./../models");
 const { transactionService1 } = require('./../services/transactionService')
 const { transactionService2 } = require('./../services/transactionService')
 const { transactionService3 } = require('./../services/transactionService')
+const { transactionService4 } = require('./../services/transactionService')
 
 module.exports = {
     createTransaction: async (req, res, next) => {
@@ -60,11 +61,7 @@ module.exports = {
     getTotal: async (req, res, next) => {
         try {
             const data = req.body.createdAt
-            const total = await db.transaction.findOne({
-                where: {
-                    createdAt: `${data} 00:00:00`
-                }
-            })
+            const total = await transactionService4(data)
             res.status(201).send({
                 isError: false,
                 message: 'Get Total Success',
