@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react"
 import toast from "react-hot-toast"
 const ModalNewCat = () => {
     const inputCategoryName = useRef()
+    const [category, setCategory] = useState([]);
     const onCreateCategory = async () => {
         try {
             const inputs = {
@@ -17,11 +18,21 @@ const ModalNewCat = () => {
                 const data = await axios.post(`${process.env.REACT_APP_URL}products/addcategory`, inputs)
                 toast.success('Create Category Success')
                 console.log(data);
+                onGetCategory()
             }
         } catch (error) {
             console.log(error);
         }
     }
+
+    const onGetCategory = async () => {
+        try {
+            const category = await axios.get(`${process.env.REACT_APP_URL}products/category`);
+            setCategory(category.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <div>
             <Button style={"btn bg-green-900 hover:bg-green-900 text-bold text-xl w-[180px] h-[80px] text-white rounded-full"} text={"Add new +"} onClick={() => document.getElementById('my_modal_3').showModal()} />
