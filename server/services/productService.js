@@ -123,4 +123,29 @@ module.exports = {
       return error;
     }
   },
+  editCategoryService1: async (id) => {
+    try {
+      return await db.category.findOne({
+        where: {
+          id
+        }
+      })
+    } catch (error) {
+      return error
+    }
+  },
+  editCategoryService2: async (id, name) => {
+    try {
+      return await db.category.update({
+        name
+      },
+        {
+          where: {
+            id
+          }
+        })
+    } catch (error) {
+      return error
+    }
+  }
 };
