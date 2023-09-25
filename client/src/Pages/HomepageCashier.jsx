@@ -54,14 +54,42 @@ const HomepageCashier = () => {
       console.log(error);
     }
   };
-  // const onGetCart = async () => {
-  //     try {
-  //         const cart = await axios.post(`${process.env.REACT_APP_URL}products/cart/${cartId}`)
-  //         console.log(cart)
-  //     } catch (error) {
-  //         console.log(error)
-  //     }
-  // }
+
+  const handlePlusQty = async (pId) => {
+    try {
+      console.log(pId);
+      const qty = await axios.get(
+        `${process.env.REACT_APP_URL}products/addqty?pId=${pId}&id=${id}`
+      );
+
+      console.log(qty.data.isError);
+      onGetCart();
+      if (!qty.data.isError) return toast.success(qty.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleMinusQty = async (pId) => {
+    try {
+      console.log(pId);
+      const qty = await axios.get(
+        `${process.env.REACT_APP_URL}products/minusqty?pId=${pId}&id=${id}`
+      );
+
+      console.log(qty.data.isError);
+      if (qty.data.isError) {
+        onGetCart();
+        return toast.error(qty.data.message);
+      } else if (!qty.data.isError) {
+        onGetCart();
+        return toast.success(qty.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addQuantity = async (product_id) => {
     try {
       console.log(product_id);
@@ -204,7 +232,13 @@ const HomepageCashier = () => {
                             button={
                               <RoundButton
                                 text="+"
-                                // onClick={() => addCart(value.product_id)}
+                                onClick={() => handlePlusQty(value.product_id)}
+                              />
+                            }
+                            button1={
+                              <RoundButton
+                                text="-"
+                                onClick={() => handleMinusQty(value.product_id)}
                               />
                             }
                           />
