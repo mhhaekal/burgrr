@@ -11,7 +11,7 @@ module.exports = {
           product_name: "Cheeseburger",
           product_price: 32000,
           quantity: 2,
-          amount: 64000,
+          // amount: 64000,
           product_id: 1,
           transaction_id: 1,
         },

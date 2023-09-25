@@ -12,6 +12,7 @@ import ModalNew from "../Component/Modals/ModalNew";
 import ModalEdit from "../Component/Modals/ModalEdit";
 import ModalNewCat from "../Component/Modals/ModalNewCat";
 import ModalEditCat from "../Component/Modals/ModalEditCat";
+import Input from "./../Component/Input";
 
 const HomepageAdmin = () => {
   const [catId, setCatId] = useState("");
@@ -21,9 +22,12 @@ const HomepageAdmin = () => {
   const [sort, setSort] = useState("ASC");
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostsPerPage] = useState(8);
+  const [modal, setModal] = useState(false);
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
   const currentPosts = products.slice(firstPostIndex, lastPostIndex);
+  const [inputCat, setInputCat] = useState("");
+  const [cat_id, setCat_id] = useState("");
 
   const onGetCategory = async () => {
     try {
@@ -44,10 +48,36 @@ const HomepageAdmin = () => {
     }
   };
 
+  const handleSaveCat = async () => {
+    try {
+      //   console.log(cat_id);
+      const res = await axios.patch(`${process.env.REACT_APP_URL}products/saveCat`, {
+        inputCat,
+        id: cat_id,
+      });
+      console.log(res);
+      setModal(!modal);
+      onGetCategory();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onFilterCat = async (id) => {
     try {
       setCurrentPage(1);
       setCatId(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEditCategory = async (cateId) => {
+    try {
+      console.log(cateId);
+      setCat_id(cateId);
+      const res = await axios.get(`${process.env.REACT_APP_URL}products/getOneCat/${cateId}`);
+      setInputCat(res.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -68,10 +98,11 @@ const HomepageAdmin = () => {
   useEffect(() => {
     onGetCategory();
     fetchFilteredProducts();
-  }, [catId, searchQuery, sort]);
+    console.log(cat_id);
+  }, [catId, searchQuery, sort, cat_id]);
 
   return (
-    <div>
+    <div className="">
       <div className="flex h-screen">
         <NavAdmin />
 
@@ -85,12 +116,23 @@ const HomepageAdmin = () => {
             <CategoryCard name={"Show All"} onClick={() => onFilterCat("")} />
             {category.map((value, index) => {
               return (
-                <div key={index}>
+                <div className="relative" key={index}>
                   <CategoryCard
                     onClick={() => onFilterCat(value.id)}
                     name={value.name}
-                    item={<ModalEditCat />}
+                    // item={<ModalEditCat />}
                   />
+                  <div className="absolute right-3 top-0 ">
+                    {/* <ModalEditCat /> */}
+                    <GrFormEdit
+                      size={40}
+                      className=" rounded-full bg-slate-200 hover:bg-slate-300 active:scale-90"
+                      onClick={() => {
+                        setModal(true);
+                        handleEditCategory(value.id);
+                      }}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -104,7 +146,7 @@ const HomepageAdmin = () => {
               <ModalNew />
               <Searchbar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
               <Button
-                style={`btn bg-green-600 hover:bg-green-600 text-white w-[40px]`}
+                style={`btn bg-green-600 hover:bg-green-600 text-white w-[70px]`}
                 text={"Reset"}
                 onClick={() => setSearchQuery("")}
               />
@@ -148,7 +190,9 @@ const HomepageAdmin = () => {
           </div>
 
           <div className="pt-4 border border-t-green-600">
-            <div className="text-xl flex justify-center items-center ">8 Product(s)</div>
+            <div className="text-xl flex justify-center items-center ">
+              {currentPosts.length} Product(s)
+            </div>
             <Pagination
               totalPost={products.length}
               postsPerPage={postPerPage}
@@ -156,6 +200,56 @@ const HomepageAdmin = () => {
               currentPage={currentPage}
             />
           </div>
+        </div>
+      </div>
+      {/* <div className={modal ? "h-screen backdrop-blur-sm bg-black/30 absolute z-50" : null}></div> */}
+      {modal ? (
+        <div
+          //   onClick={() => setNav(!nav)}
+          className="fixed backdrop-blur-md bg-black/80 h-screen w-full z-10 top-0 right-0 duration-600 ease-in"
+        ></div>
+      ) : (
+        ""
+      )}
+
+      <div
+        className={
+          modal
+            ? `fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] p-10 bg-green-600 rounded-md `
+            : `hidden`
+        }
+      >
+        <h3 className="font-bold text-4xl text-white">Edit Category</h3>
+
+        <div className="flex flex-col gap-5 mt-5">
+          <div>
+            <div className="text-white pb-2"> Category Name</div>
+            <Input
+              type={"text"}
+              value={inputCat}
+              style={`input w-full`}
+              onChange={(e) => setInputCat(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="modal-action">
+          <form method="dialog" onSubmit={handleSaveCat}>
+            {/* if there is a button in form, it will close the modal */}
+            <Button
+              text="Submit"
+              style={`btn bg-white text-black border-white hover:bg-white hover:border-white`}
+            />
+          </form>
+          <Button
+            text={"cancel"}
+            style={`btn bg-black text-white border-black hover:bg-black hover:border-black`}
+            onClick={() => setModal(!modal)}
+          />
+          <Button
+            text="Delete"
+            style={`btn bg-red-600 text-white border-red-600 hover:bg-red-600 hover:border-black`}
+          />
         </div>
       </div>
     </div>

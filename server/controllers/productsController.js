@@ -67,19 +67,19 @@ module.exports = {
   },
   getProductById: async (req, res, next) => {
     try {
-      const { id } = req.params
+      const { id } = req.params;
       const product = await db.product.findOne({
         where: {
-          id
-        }
-      })
+          id,
+        },
+      });
       res.status(201).send({
         isError: false,
         message: "Get Product By id Success",
         data: product,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   },
   getAllProductsByCat: async (req, res, next) => {
@@ -139,18 +139,20 @@ module.exports = {
   getCart: async (req, res, next) => {
     try {
       const cart = await db.cart.findAll({
-        include: [{
-          model: db.product,
-          attributes: ["product_name", "product_image", "price"]
-        }]
-      })
+        include: [
+          {
+            model: db.product,
+            attributes: ["product_name", "product_image", "price"],
+          },
+        ],
+      });
       res.status(201).send({
         isError: false,
         message: "Get Cart Success",
         data: cart,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   },
   addToCart: async (req, res, next) => {
@@ -164,10 +166,12 @@ module.exports = {
         },
       });
       const cart = await db.cart.findOne({
-        include: [{
-          model: db.product,
-          attributes: ["price"]
-        }],
+        include: [
+          {
+            model: db.product,
+            attributes: ["price"],
+          },
+        ],
         where: {
           product_id: product.id,
         },
@@ -185,25 +189,24 @@ module.exports = {
       }
 
       const cart1 = await db.cart.findOne({
-        include: [{
-          model: db.product,
-          attributes: ["price"]
-        }],
+        include: [
+          {
+            model: db.product,
+            attributes: ["price"],
+          },
+        ],
         where: {
           product_id: product.id,
         },
       });
 
-      const total = (cart1.dataValues.quantity) * (cart1.dataValues.product.price)
+      const total = cart1.dataValues.quantity * cart1.dataValues.product.price;
       console.log(total);
 
-      const totalFinal = await db.cart.sum('total')
+      const totalFinal = await db.cart.sum("total");
       console.log(totalFinal);
 
-      await db.cart.update(
-        { total: total },
-        { where: { id: cart.id } }
-      );
+      await db.cart.update({ total: total }, { where: { id: cart.id } });
 
       res.status(201).send({
         isError: false,
@@ -215,17 +218,99 @@ module.exports = {
       next(error);
     }
   },
+  getOneCat: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const resCat = await db.category.findOne({ where: { id } });
+      console.log(res);
+      if (!resCat) {
+        return res.status(200).send({
+          isError: true,
+          message: "Category not found",
+        });
+      }
 
+      res.status(200).send({
+        isError: false,
+        message: "get data success",
+        data: resCat.dataValues.name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  saveEditCat: async (req, res, next) => {
+    try {
+      const { inputCat, id } = req.body;
+      console.log(inputCat);
+      console.log(id);
+      const resp = await db.category.update({ name: inputCat }, { where: { id } });
+      console.log(resp);
+      res.status(200).send({
+        isError: false,
+        message: "Changes Success!",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  addProductToCart: async (req, res, next) => {
+    try {
+      const { product_id, user_id } = req.body;
+      console.log(product_id);
+      console.log(user_id);
+      const checkProduct = await db.cart.findOne({ where: { product_id, user_id } });
+      //   console.log(checkProduct.dataValues);
+      if (checkProduct) {
+        const updateQuantity = await db.cart.update(
+          { quantity: checkProduct.dataValues.quantity + 1 },
+          { where: { product_id, user_id } }
+        );
+        console.log(">>>>");
+        console.log(updateQuantity);
+        return res.status(200).send({
+          isError: false,
+          message: "Successfully add quantity product to cart!!",
+        });
+      }
+      const response = await db.cart.create({
+        product_id,
+        user_id,
+        quantity: 1,
+      });
+      console.log(response);
+      res.status(200).send({
+        isError: false,
+        message: "Successfully add product to cart!!",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getAllDataCart: async (req, res, next) => {
+    try {
+      const getData = await db.cart.findAll({
+        include: [
+          {
+            model: db.product,
+          },
+        ],
+      });
+      res.send(getData);
+    } catch (error) {
+      console.log(error);
+    }
+  },
   getTotal: async (req, res, next) => {
     try {
-      const cart = await db.cart.sum("total")
+      const cart = await db.cart.sum("total");
       res.status(201).send({
         isError: false,
         message: "Get Total Success",
         data: cart,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   },
 
@@ -244,24 +329,24 @@ module.exports = {
           product_id: product.id,
         },
       });
-      console.log(cart.dataValues.quantity)
+      console.log(cart.dataValues.quantity);
       // buat jwt menyusul
       // const cart = await db.cart.create({ product, product_id: productId, user_id: userId })
       if (cart.dataValues.quantity === 1) {
         await db.cart.destroy({
           where: {
-            product_id: productId
-          }
-        })
+            product_id: productId,
+          },
+        });
       } else if (cart) {
         await db.cart.update(
           {
-            quantity: cart.dataValues.quantity - 1
+            quantity: cart.dataValues.quantity - 1,
           },
           {
             where: {
-              id: cart.id
-            }
+              id: cart.id,
+            },
           }
         );
       }
