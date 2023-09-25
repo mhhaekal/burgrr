@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "Qwerty@123",
-    "database": "burgrr2",
+    "password": "noobman514",
+    "database": "burgrr",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "timezone": "+07:00"

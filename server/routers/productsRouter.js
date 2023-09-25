@@ -14,6 +14,8 @@ Router.get("/all", productsController.getAllProducts);
 Router.get("/all/:id", productsController.getProductById);
 Router.get("/filtered", productsController.getAllProductsByCat);
 Router.get("/allcart", productsController.getCart);
+Router.get("/addqty", productsController.plusQty);
+Router.get("/minusqty", productsController.minusQty);
 Router.patch("/saveCat", productsController.saveEditCat);
 Router.post("/addProduct", productsController.addProductToCart);
 Router.get("/getOneCat/:id", productsController.getOneCat);

@@ -57,16 +57,16 @@ module.exports = {
   },
   editCategory: async (req, res, next) => {
     try {
-      const { id, name } = req.body
-      const category = await editCategoryService1(id)
-      const categoryUpdate = await editCategoryService2(id, name)
+      const { id, name } = req.body;
+      const category = await editCategoryService1(id);
+      const categoryUpdate = await editCategoryService2(id, name);
       res.status(201).send({
         isError: false,
         message: "Get Category Success",
         data: categoryUpdate,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   },
   getAllProducts: async (req, res, next) => {
@@ -402,6 +402,57 @@ module.exports = {
       });
     } catch (error) {
       next(error);
+    }
+  },
+  plusQty: async (req, res, next) => {
+    try {
+      const { pId, id } = req.query;
+      const resP = await db.cart.findOne({ where: { product_id: pId, user_id: id } });
+      if (!resP)
+        return res.status(200).send({
+          isError: true,
+          message: "product not found",
+        });
+
+      const addqty = await db.cart.update(
+        { quantity: resP.dataValues.quantity + 1 },
+        { where: { product_id: pId, user_id: id } }
+      );
+
+      console.log(addqty);
+      res.status(200).send({
+        isError: false,
+        message: "Success Add Quantity",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  minusQty: async (req, res, next) => {
+    try {
+      const { pId, id } = req.query;
+      const resP = await db.cart.findOne({ where: { product_id: pId, user_id: id } });
+
+      if (resP.dataValues.quantity === 1) {
+        await db.cart.destroy({ where: { product_id: pId, user_id: id } });
+        res.status(200).send({
+          isError: false,
+          message: "Success Delete Product from cart",
+        });
+      }
+
+      const minusqty = await db.cart.update(
+        { quantity: resP.dataValues.quantity - 1 },
+        { where: { product_id: pId, user_id: id } }
+      );
+
+      console.log(minusqty);
+      res.status(200).send({
+        isError: false,
+        message: "Success substrac Quantity",
+      });
+    } catch (error) {
+      console.log(error);
     }
   },
 };
